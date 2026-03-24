@@ -8,7 +8,16 @@
 import Foundation
 
 struct User: Codable {
-    var uid: UUID
+    var uid: String
     var name: String
     var email: String
+    
+    var initials: String {
+        let formatter = PersonNameComponentsFormatter()
+        if let components = formatter.personNameComponents(from: name) {
+            formatter.style = .abbreviated
+            return formatter.string(from: components)
+        }
+        return "NA"
+    }
 }

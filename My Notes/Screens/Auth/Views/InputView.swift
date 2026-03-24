@@ -14,17 +14,19 @@ struct InputView: View {
     
     init(placeholder: String, isSecureField: Bool = false, text: Binding<String>) {
         self.placeholder = placeholder
-        self.isSecureField = isSecureField
+        self.isSecureField = isSecureField
         self._text = text
     }
     
     var body: some View {
-        if isSecureField {
-            SecureField(placeholder, text: $text)
-        } else {
-            TextField(placeholder, text: $text)
+        VStack {
+            if isSecureField {
+                SecureField(placeholder, text: $text)
+            } else {
+                TextField(placeholder, text: $text)
+            }
+            Divider()
         }
-        Divider()
     }
 }
 

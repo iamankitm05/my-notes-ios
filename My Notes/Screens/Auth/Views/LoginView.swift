@@ -11,8 +11,10 @@ struct LoginView: View {
     @State var email: String = ""
     @State var password: String = ""
     
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var router : LoginFlowRouter
+    
     var body: some View {
-        NavigationStack {
            ScrollView {
                VStack(spacing: 20) {
                    InputView(placeholder: "Email", text: $email)
@@ -22,14 +24,19 @@ struct LoginView: View {
                    
                    HStack {
                        Spacer()
-                       NavigationLink(destination: ForgotPasswordView()) {
+                       
+                       Button {
+                           router.navigate(to: .forgetPassword)
+                       } label: {
                            Text("Forgot Password?")
                        }
                        
                    }
                    
                    Button {
-                       
+                       Task {
+                           await authViewModel.login(email: email, password: password)
+                       }
                    } label: {
                        Text("Continue")
                    }
@@ -42,7 +49,9 @@ struct LoginView: View {
                    }
                    
                    Button {
-                       
+                       Task {
+                           await authViewModel.login(email: email, password: password)
+                       }
                    } label: {
                        HStack {
                            Image("google")
@@ -57,7 +66,9 @@ struct LoginView: View {
                    
                    HStack {
                        Text("Don't have an account? ")
-                       NavigationLink(destination: SignUpView()) {
+                       Button {
+                           router.navigate(to: .signUp)
+                       } label: {
                            Text("Sign up")
                        }
                    }
@@ -67,10 +78,12 @@ struct LoginView: View {
                }
                .navigationTitle("Login")
                .padding()
+               .alert("Something went wrong!", isPresented: $authViewModel.isError) {}
             }
-        }    }
+        }
 }
 
 #Preview {
     LoginView()
+        .environmentObject(AuthViewModel())
 }

@@ -11,7 +11,6 @@ struct ForgotPasswordView: View {
     @State var email: String = ""
     
     var body: some View {
-        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     InputView(placeholder: "Email", text: $email)
@@ -23,9 +22,7 @@ struct ForgotPasswordView: View {
                     } .buttonStyle(CapsuleButtonStyle())
                 }
                 .padding()
-                .navigationBarTitle("Forgot Password")
             }
-        }
     }
 }
 

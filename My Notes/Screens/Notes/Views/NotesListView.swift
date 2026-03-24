@@ -9,27 +9,20 @@ import SwiftUI
 
 struct NotesListView: View {
     var body: some View {
-        NavigationStack {
-            ZStack(alignment: .bottomTrailing) {
-                List(1...20, id: \.self) { item in
-                    Text("Item \(item)")
-                }
+        ZStack(alignment: .bottomTrailing) {
+            Button {
                 
-                Button {
-                    
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.title)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.blue)
-                        .clipShape(Circle())
-                        .shadow(radius: 5)
-                }
-                .padding()
-                
+            } label: {
+                Image(systemName: "plus")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.blue)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
             }
-            .navigationTitle("Notes")
+            .padding()
+            
         }
     }
 }
