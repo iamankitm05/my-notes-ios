@@ -10,8 +10,8 @@ import FirebaseAuth
 import FirebaseFirestore
 import Combine
 
+@MainActor
 final class AuthViewModel: ObservableObject {
-    
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     @Published var isError: Bool = false
@@ -45,8 +45,7 @@ final class AuthViewModel: ObservableObject {
     
     func fetchUser(uid: String) async {
         do {
-            let document = try await db.collection("app")
-                .document("my_notes")
+            let document = try await db
                 .collection("users")
                 .document(uid)
                 .getDocument()
@@ -70,8 +69,7 @@ final class AuthViewModel: ObservableObject {
     func storeUserInFirestore(uid: String, name: String, email: String) async {
         let user = User(uid: uid, name: name, email: email)
         do {
-            try db.collection("app")
-                .document("my_notes")
+            try db
                 .collection("users")
                 .document(uid)
                 .setData(from: user)
